@@ -1,0 +1,5 @@
+---
+- name: creating prechecks directory
+  file:
+          path: /tmp/server_prechecks
+          state: directory

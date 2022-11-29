@@ -1,0 +1,9 @@
+---
+- name: Checking the mount point
+  shell: df -hT > /tmp/mount_status
+
+- name: Checking the fstab entries
+  copy:
+          src: /etc/fstab
+          remote_src: true
+          dest: /tmp/server_prechecks/fstab

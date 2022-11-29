@@ -1,0 +1,9 @@
+---
+- name: checking packages
+  package_facts:
+          manager: "auto"
+  
+- name: taking constraints output
+  shell: pcs constraint show --full > /tmp/server_prechecks/constraints
+  when: "'pcs' in ansible_facts.packages"
+

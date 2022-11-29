@@ -1,0 +1,8 @@
+---
+- name: check packages
+  package_facts:
+          manager: "auto"
+
+- name: checking cluster status
+  shell: pcs status > /tmp/server_prechecks/pcs_status 
+  when: " 'pcs' in ansible_facts.packages"

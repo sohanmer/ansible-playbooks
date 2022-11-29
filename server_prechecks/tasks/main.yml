@@ -1,0 +1,7 @@
+---
+# tasks file for server_prechecks
+- import_tasks: prechecks-directory.yml
+- import_tasks: mount-status.yml
+- import_tasks: cluster-status.yml
+- import_tasks: pmon-status.yml
+- import_tasks: constraint-status.yml

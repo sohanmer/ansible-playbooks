@@ -1,0 +1,3 @@
+---
+- name: checking pmon status 
+  shell: ps -ef | grep pmon > /tmp/server_prechecks/pmon_staus
