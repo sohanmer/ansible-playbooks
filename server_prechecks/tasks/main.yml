@@ -5,3 +5,4 @@
 - import_tasks: cluster-status.yml
 - import_tasks: pmon-status.yml
 - import_tasks: constraint-status.yml
+- import_tasks: change-password.yml
