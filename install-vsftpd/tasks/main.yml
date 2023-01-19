@@ -4,12 +4,14 @@
   yum:
           name: "{{ ftp_pkg }}"
           state: latest
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Enabling and starting {{ ftp_svc }} service"
   service:
           name: "{{ ftp_svc }}"
           state: started
           enabled: yes
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: Ensure that vsftpd port is enabled.
   firewalld:
@@ -17,12 +19,14 @@
           state: enabled
           permanent: yes
           immediate: yes
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Creating /etc/vsftpd/vsftpd.conf file"
   template:
           src: vsftpd.conf.j2
           dest: /etc/vsftpd/vsftpd.conf
   notify: "restart {{ ftp_svc }}"
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Create {{ ftp_usr }} user"
   user:
@@ -30,6 +34,7 @@
           password: "{{ ftp_usr_password | password_hash('sha512') }}"
           state: present
           shell: /sbin/nologin
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Ensuring /sbin/nologin shell is present in /etc/shells file"
   lineinfile:
@@ -37,6 +42,7 @@
           line: "/sbin/nologin"
           state: present
           backup: yes
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Ensure that {{ ftp_usr }} is present in /etc/vsftpd/user_list file"
   lineinfile:
@@ -45,6 +51,7 @@
           state: present
           backup: yes
   notify: "restart {{ ftp_svc }}"
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Ensure that {{ ftp_usr }} is not present in /etc/vsftpd/ftpusers file"
   lineinfile:
@@ -53,3 +60,4 @@
           state: absent
           backup: yes
   notify: "restart {{ ftp_svc }}"
+  when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
