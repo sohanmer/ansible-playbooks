@@ -1,14 +1,14 @@
 install-vsftpd
 =========
 
-Install and configure vsftpd with below config.\n
-user: ftpusr
-password: password is set as short hostname
+Install and configure vsftpd with below config. <br />
+user: ftpusr <br />
+password: password is set as short hostname <br />
 
-[config]
-anonymous_login=NO
-local_login=YES
-userlist_deny=NO 
+[config] <br />
+anonymous_login=NO <br />
+local_login=YES <br />
+userlist_deny=NO <br />
 
 Requirements
 ------------
@@ -38,5 +38,5 @@ BSD
 
 Author Information
 ------------------
-Name: Sohan Mer
-Email: sohan1510@gmail.com
+Name: Sohan Mer <br />
+Email: sohan1510@gmail.com <br />
