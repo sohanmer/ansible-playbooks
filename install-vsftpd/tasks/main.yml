@@ -1,0 +1,55 @@
+---
+# tasks file for install-vsftpd
+- name: "Installing {{ ftp_pkg }} package"
+  yum:
+          name: "{{ ftp_pkg }}"
+          state: latest
+
+- name: "Enabling and starting {{ ftp_svc }} service"
+  service:
+          name: "{{ ftp_svc }}"
+          state: started
+          enabled: yes
+
+- name: Ensure that vsftpd port is enabled.
+  firewalld:
+          port: 20-21/tcp
+          state: enabled
+          permanent: yes
+          immediate: yes
+
+- name: "Creating /etc/vsftpd/vsftpd.conf file"
+  template:
+          src: vsftpd.conf.j2
+          dest: /etc/vsftpd/vsftpd.conf
+  notify: "restart {{ ftp_svc }}"
+
+- name: "Create {{ ftp_usr }} user"
+  user:
+          name: "{{ ftp_usr }}"
+          password: "{{ ftp_usr_password | password_hash('sha512') }}"
+          state: present
+          shell: /sbin/nologin
+
+- name: "Ensuring /sbin/nologin shell is present in /etc/shells file"
+  lineinfile:
+          path: "/etc/shells"
+          line: "/sbin/nologin"
+          state: present
+          backup: yes
+
+- name: "Ensure that {{ ftp_usr }} is present in /etc/vsftpd/user_list file"
+  lineinfile:
+          path: "/etc/vsftpd/user_list"
+          line: "{{ ftp_usr }}"
+          state: present
+          backup: yes
+  notify: "restart {{ ftp_svc }}"
+
+- name: "Ensure that {{ ftp_usr }} is not present in /etc/vsftpd/ftpusers file"
+  lineinfile:
+          path: "/etc/vsftpd/ftpusers"
+          regexp: "^{{ ftp_usr }}"
+          state: absent
+          backup: yes
+  notify: "restart {{ ftp_svc }}"
