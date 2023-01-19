@@ -1,0 +1,9 @@
+---
+# vars file for install-vsftpd
+ftp_pkg: vsftpd
+ftp_svc: vsftpd
+allow_local_login: 'YES'
+allow_anonymous_login: 'NO'
+deny_userlist: 'NO'
+ftp_usr: ftpusr
+ftp_usr_password: "{{ inventory_hostname_short }}"
