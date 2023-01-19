@@ -25,7 +25,6 @@
   template:
           src: vsftpd.conf.j2
           dest: /etc/vsftpd/vsftpd.conf
-  notify: "restart {{ ftp_svc }}"
   when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Create {{ ftp_usr }} user"
@@ -50,7 +49,6 @@
           line: "{{ ftp_usr }}"
           state: present
           backup: yes
-  notify: "restart {{ ftp_svc }}"
   when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: "Ensure that {{ ftp_usr }} is not present in /etc/vsftpd/ftpusers file"
