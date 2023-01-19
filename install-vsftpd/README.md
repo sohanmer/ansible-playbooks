@@ -1,7 +1,7 @@
 install-vsftpd
 =========
 
-Install and configure vsftpd with below config.
+Install and configure vsftpd with below config.\n
 user: ftpusr
 password: password is set as short hostname
 
